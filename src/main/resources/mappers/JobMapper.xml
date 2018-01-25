@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.quartz.dao.JobAndTriggerMapper">
+
+    <select id="getJobAndTriggerDetails" resultType="com.example.quartz.domain.JobAndTrigger">
+        SELECT
+          JOB.JOB_NAME,
+          JOB.JOB_GROUP,
+          JOB.JOB_CLASS_NAME,
+          TRI.TRIGGER_NAME,
+          TRI.TRIGGER_GROUP,
+          TRI.TRIGGER_STATE,
+          CRON.CRON_EXPRESSION,
+          CRON.TIME_ZONE_ID
+        FROM qrtz_job_details JOB
+        LEFT JOIN qrtz_triggers TRI ON  JOB.JOB_NAME = TRI.JOB_NAME AND JOB.JOB_GROUP = TRI.JOB_GROUP
+        LEFT JOIN qrtz_cron_triggers CRON ON CRON.TRIGGER_NAME = TRI.TRIGGER_NAME AND CRON.TRIGGER_GROUP = TRI.TRIGGER_GROUP
+    </select>
+
+</mapper>
